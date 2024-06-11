@@ -60,9 +60,33 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Interfaces\" />
+	  <None Remove="Services\" />
+	  <None Remove="Interfaces\Navigation\" />
+	  <None Remove="Services\Navigation\" />
+	  <None Remove="Views\" />
+	  <None Remove="ViewModels\" />
+	  <None Remove="Views\Base\" />
+	  <None Remove="ViewModels\Base\" />
+	  <None Remove="Extensions\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Interfaces\" />
+	  <Folder Include="Services\" />
+	  <Folder Include="Interfaces\Navigation\" />
+	  <Folder Include="Services\Navigation\" />
+	  <Folder Include="Views\" />
+	  <Folder Include="ViewModels\" />
+	  <Folder Include="Views\Base\" />
+	  <Folder Include="ViewModels\Base\" />
+	  <Folder Include="Extensions\" />
+	</ItemGroup>
 </Project>
