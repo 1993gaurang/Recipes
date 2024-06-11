@@ -47,20 +47,23 @@ namespace Recipes.ViewModels
 
         public void FetchData()
         {
-            IsBusy = true;
-            _ = _recipeDataService.GetRecipesMeals(SelectedCategory.StrCategory)
-                .ContinueWith(task =>
-                {
-                    IsBusy = false;
-                    if (task.IsCompleted)
+            if(RecipeMeals == null || !RecipeMeals.Any())
+            {
+                IsBusy = true;
+                _ = _recipeDataService.GetRecipesMeals(SelectedCategory.StrCategory)
+                    .ContinueWith(task =>
                     {
-                        RecipeMeals recipeMeals = task.Result;
-                        MainThread.BeginInvokeOnMainThread(() =>
+                        IsBusy = false;
+                        if (task.IsCompleted)
                         {
-                            RecipeMeals = new ObservableCollection<MealData>(recipeMeals.Meals);
-                        });
-                    }
-                });
+                            RecipeMeals recipeMeals = task.Result;
+                            MainThread.BeginInvokeOnMainThread(() =>
+                            {
+                                RecipeMeals = new ObservableCollection<MealData>(recipeMeals.Meals);
+                            });
+                        }
+                    });
+            }
         }
     }
 }
