@@ -1,12 +1,17 @@
-﻿namespace Recipes;
+﻿using Recipes.Extensions;
+using Recipes.Interfaces.Navigation;
+using Recipes.ViewModels;
+
+namespace Recipes;
 
 public partial class App : Application
 {
-	public App()
+    INavigationService navigationService;
+    public App()
 	{
 		InitializeComponent();
-
-		MainPage = new AppShell();
-	}
+        navigationService = ServiceExtension.GetService<INavigationService>();
+        navigationService.SetMainViewModel<RecipeCategoryPageViewModel>();
+    }
 }
 
