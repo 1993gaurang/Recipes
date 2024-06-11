@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Recipes.Views.MealDetailPage"
+    xmlns:base="clr-namespace:Recipes.Views.Base"
+    xmlns:models="clr-namespace:Recipes.Models"
+    x:DataType="vm:MealDetailPageViewModel"
+    xmlns:vm="clr-namespace:Recipes.ViewModels"
+    x:Name="mealsPage"
+    Title="{Binding SelectedMealString}">
+    <base:BaseContentPage.BindingContext>
+        <vm:MealDetailPageViewModel/>
+    </base:BaseContentPage.BindingContext>
+    <Grid
+        RowDefinitions="Auto,*">
+        <Image
+            Margin="20"
+            Grid.Row="0"
+            Source="{Binding SelectedMealImage}"
+            HeightRequest="200"
+            HorizontalOptions="Fill">
+
+        </Image>
+        <ScrollView
+            VerticalScrollBarVisibility="Default"
+            Grid.Row="1">
+            <Label
+                Margin="20,0,20,20"
+                Grid.Row="1"
+                Text="{Binding SelectedMealInstructions}">
+            </Label>
+        </ScrollView>
+        
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            IsVisible="{Binding IsBusy}"
+            IsRunning="{Binding IsBusy}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"/>
+
+    </Grid>
+</base:BaseContentPage>

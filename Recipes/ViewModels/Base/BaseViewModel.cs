@@ -31,6 +31,23 @@ namespace Recipes.ViewModels.Base
         public virtual void OnDisappearing()
         {
         }
+
+        public async Task<bool> CheckInternetConnection()
+        {
+
+            bool connectionAvailable = Connectivity.NetworkAccess == NetworkAccess.Internet;
+            if (!connectionAvailable)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Application.Current.MainPage.DisplayAlert("Alert", "Check internet connection", "Ok");
+                });
+            }
+
+            return connectionAvailable;
+
+        }
     }
 }
 

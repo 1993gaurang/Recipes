@@ -7,7 +7,7 @@ using Recipes.ViewModels.Base;
 
 namespace Recipes.ViewModels
 {
-	public partial class CategoryListPageViewModel : BaseViewModel
+	public partial class CategoryMealsPageViewModel : BaseViewModel
     {
 		[ObservableProperty]
 		string selectedCategoryString;
@@ -16,13 +16,14 @@ namespace Recipes.ViewModels
         ObservableCollection<MealData> recipeMeals;
 
         CategoriesData SelectedCategory;
-        public CategoryListPageViewModel()
+        public CategoryMealsPageViewModel()
 		{
 		}
 
         [RelayCommand]
         private async Task MealClicked(MealData mealData)
         {
+            await _navigationService.NavigateToAsync<MealDetailPageViewModel>(mealData);
         }
 
         public override void Init(object args)
@@ -35,11 +36,19 @@ namespace Recipes.ViewModels
             }
         }
 
-        public override void OnAppearing()
+        public override async void OnAppearing()
         {
             base.OnAppearing();
+            if (await CheckInternetConnection())
+            {
+                FetchData();
+            }
+        }
+
+        public void FetchData()
+        {
             IsBusy = true;
-            _recipeDataService.GetRecipesMeals(SelectedCategory.StrCategory)
+            _ = _recipeDataService.GetRecipesMeals(SelectedCategory.StrCategory)
                 .ContinueWith(task =>
                 {
                     IsBusy = false;

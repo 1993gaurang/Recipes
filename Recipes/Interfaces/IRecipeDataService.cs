@@ -7,6 +7,7 @@ namespace Recipes.Interfaces
 	{
         Task<RecipeCategories> GetRecipesCategories();
         Task<RecipeMeals> GetRecipesMeals(string category);
+        Task<RecipeMealDetail> GetMealsDetails(string mealId);
     }
 }
 

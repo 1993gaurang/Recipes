@@ -2,9 +2,9 @@
 
 namespace Recipes.Views;
 
-public partial class CategoryListPage : BaseContentPage
+public partial class MealDetailPage : BaseContentPage
 {
-	public CategoryListPage()
+	public MealDetailPage()
 	{
 		InitializeComponent();
 	}

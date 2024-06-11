@@ -2,22 +2,21 @@
 <base:BaseContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Recipes.Views.CategoryMealsPage"
     xmlns:base="clr-namespace:Recipes.Views.Base"
-    x:Class="Recipes.Views.CategoryListPage"
     xmlns:models="clr-namespace:Recipes.Models"
-    x:DataType="vm:CategoryListPageViewModel"
+    x:DataType="vm:CategoryMealsPageViewModel"
     xmlns:vm="clr-namespace:Recipes.ViewModels"
+    x:Name="mealsPage"
     Title="{Binding SelectedCategoryString}">
     <base:BaseContentPage.BindingContext>
-        <vm:CategoryListPageViewModel/>
+        <vm:CategoryMealsPageViewModel/>
     </base:BaseContentPage.BindingContext>
     <Grid>
         <CollectionView
             ItemsSource="{Binding RecipeMeals}"
-            SelectionMode="Single"
-            x:Name="RecipesCollectionView"
-            SelectionChangedCommand="{Binding MealClickedCommand}"
-            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference RecipesCollectionView}}">
+            SelectionMode="None"
+            x:Name="MealsCollectionView">
             <CollectionView.ItemTemplate>
                 <DataTemplate
                     x:DataType="models:MealData">
@@ -45,6 +44,12 @@
                             BackgroundColor="Gray"
                             HeightRequest="0.5"
                             />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding BindingContext.MealClickedCommand,Source={x:Reference mealsPage}}"
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </Grid.GestureRecognizers>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

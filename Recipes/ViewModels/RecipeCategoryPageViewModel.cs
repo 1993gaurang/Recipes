@@ -23,7 +23,7 @@ namespace Recipes.ViewModels
         [RelayCommand]
         private async Task CategoryClicked(CategoriesData categoriesData)
         {
-            await _navigationService.NavigateToAsync<CategoryListPageViewModel>(categoriesData);
+            await _navigationService.NavigateToAsync<CategoryMealsPageViewModel>(categoriesData);
         }
 
         public override void Init(object args)
@@ -31,17 +31,25 @@ namespace Recipes.ViewModels
             base.Init(args);
         }
 
-        public override void OnAppearing()
+        public override async void OnAppearing()
         {
             base.OnAppearing();
-            if(RecipeCategories == null || !RecipeCategories.Any())
+            if (await CheckInternetConnection())
+            {
+                FetchData();
+            }
+        }
+
+        public void FetchData()
+        {
+            if (RecipeCategories == null || !RecipeCategories.Any())
             {
                 IsBusy = true;
-                _recipeDataService.GetRecipesCategories()
+                _ = _recipeDataService.GetRecipesCategories()
                     .ContinueWith(task =>
                     {
                         IsBusy = false;
-                        if (task.IsCompleted)
+                        if (task.IsCompletedSuccessfully)
                         {
                             RecipeCategories recipeCategories = task.Result;
                             MainThread.BeginInvokeOnMainThread(() =>

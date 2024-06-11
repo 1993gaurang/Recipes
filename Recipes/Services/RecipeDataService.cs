@@ -7,8 +7,6 @@ namespace Recipes.Services
 {
 	public class RecipeDataService : IRecipeDataService
     {
-
-
         public HttpClient Client;
 
         public RecipeDataService()
@@ -30,8 +28,11 @@ namespace Recipes.Services
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
-                        var data = JsonConvert.DeserializeObject<RecipeCategories>(responseContent);
-                        tcs.SetResult(data);
+                        if (!string.IsNullOrEmpty(responseContent))
+                        {
+                            var data = JsonConvert.DeserializeObject<RecipeCategories>(responseContent);
+                            tcs.SetResult(data);
+                        }
                     }
                     else
                     {
@@ -60,8 +61,44 @@ namespace Recipes.Services
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
-                        var data = JsonConvert.DeserializeObject<RecipeMeals>(responseContent);
-                        tcs.SetResult(data);
+                        if (!string.IsNullOrEmpty(responseContent))
+                        {
+                            var data = JsonConvert.DeserializeObject<RecipeMeals>(responseContent);
+                            tcs.SetResult(data);
+                        }
+                    }
+                    else
+                    {
+                        tcs.SetResult(null);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+
+            return await tcs.Task;
+        }
+
+        public async Task<RecipeMealDetail> GetMealsDetails(string mealId)
+        {
+            var url = String.Format("https://www.themealdb.com/api/json/v1/1/lookup.php?i={0}", mealId);
+            var tcs = new TaskCompletionSource<RecipeMealDetail>();
+
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    HttpResponseMessage response = await Client.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        if (!string.IsNullOrEmpty(responseContent))
+                        {
+                            var data = JsonConvert.DeserializeObject<RecipeMealDetail>(responseContent);
+                            tcs.SetResult(data);
+                        }
                     }
                     else
                     {
