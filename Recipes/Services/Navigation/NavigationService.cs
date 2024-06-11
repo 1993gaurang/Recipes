@@ -24,6 +24,15 @@ namespace Recipes.Services.Navigation
             }
         }
 
+        public async Task NavigateToAsync<T>(object args = null) where T : BaseViewModel
+        {
+            var page = ResolvePageAndViewModel(typeof(T), args);
+            if (page != null && Navigation != null)
+            {
+                await Navigation.PushAsync(page);
+            }
+        }
+
         private Page ResolvePageAndViewModel(Type viewModelType, object args)
         {
             Page page = null;

@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Recipes.Interfaces;
 using Recipes.Interfaces.Navigation;
+using Recipes.Services;
 using Recipes.Services.Navigation;
 
 namespace Recipes;
@@ -33,6 +35,7 @@ public static class MauiProgram
 	{
         //Navigation Services
         builder.Services.AddSingleton<INavigationService, NavigationService>();
+        builder.Services.AddSingleton<IRecipeDataService, RecipeDataService>();
         return builder;
     }
 }

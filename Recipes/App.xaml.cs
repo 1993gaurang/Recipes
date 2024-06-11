@@ -6,12 +6,12 @@ namespace Recipes;
 
 public partial class App : Application
 {
-    INavigationService navigationService;
+    INavigationService _navigationService;
     public App()
 	{
 		InitializeComponent();
-        navigationService = ServiceExtension.GetService<INavigationService>();
-        navigationService.SetMainViewModel<RecipeCategoryPageViewModel>();
+        _navigationService = ServiceExtension.GetService<INavigationService>();
+        _navigationService.SetMainViewModel<RecipeCategoryPageViewModel>();
     }
 }
 

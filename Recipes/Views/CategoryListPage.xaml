@@ -3,30 +3,31 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:base="clr-namespace:Recipes.Views.Base"
-    xmlns:vm="clr-namespace:Recipes.ViewModels"
-    x:Class="Recipes.Views.RecipeCategoryPage"
+    x:Class="Recipes.Views.CategoryListPage"
     xmlns:models="clr-namespace:Recipes.Models"
-    x:DataType="vm:RecipeCategoryPageViewModel"
-    x:Name="categoryList"
-    Title="Recipes">
+    x:DataType="vm:CategoryListPageViewModel"
+    xmlns:vm="clr-namespace:Recipes.ViewModels"
+    Title="{Binding SelectedCategoryString}">
     <base:BaseContentPage.BindingContext>
-        <vm:RecipeCategoryPageViewModel/>
+        <vm:CategoryListPageViewModel/>
     </base:BaseContentPage.BindingContext>
     <Grid>
         <CollectionView
-            ItemsSource="{Binding RecipeCategories}"
-            SelectionMode="None"
-            x:Name="RecipesCollectionView">
+            ItemsSource="{Binding RecipeMeals}"
+            SelectionMode="Single"
+            x:Name="RecipesCollectionView"
+            SelectionChangedCommand="{Binding MealClickedCommand}"
+            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference RecipesCollectionView}}">
             <CollectionView.ItemTemplate>
                 <DataTemplate
-                    x:DataType="models:CategoriesData">
+                    x:DataType="models:MealData">
                     <Grid
                         
                         RowDefinitions="Auto"
                         ColumnDefinitions="Auto,*">
                         
                         <Image
-                            Source="{Binding StrCategoryThumb}"
+                            Source="{Binding StrMealThumb}"
                             Aspect="AspectFill"
                             Margin="20"
                             HeightRequest="60"
@@ -36,7 +37,7 @@
                             
                             VerticalOptions="Center"
                             FontSize="Medium"
-                            Text="{Binding StrCategory}"
+                            Text="{Binding StrMeal}"
                             FontAttributes="Bold" />
                         <BoxView
                             Grid.ColumnSpan="2"
@@ -44,12 +45,6 @@
                             BackgroundColor="Gray"
                             HeightRequest="0.5"
                             />
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding BindingContext.CategoryClickedCommand,Source={x:Reference categoryList}}"
-                                                              CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </Grid.GestureRecognizers>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

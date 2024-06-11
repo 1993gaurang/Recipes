@@ -13,7 +13,6 @@ namespace Recipes.Views.Base
         public BaseContentPage()
 		{
             On<iOS>().SetUseSafeArea(false);
-            NavigationPage.SetHasNavigationBar(this, false);
             HideSoftInputOnTapped = true;
         }
 
