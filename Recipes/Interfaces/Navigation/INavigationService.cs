@@ -7,6 +7,7 @@ namespace Recipes.Interfaces.Navigation
 	{
         void SetMainViewModel<T>(object args = null) where T : BaseViewModel;
         Task NavigateToAsync<T>(object args = null) where T : BaseViewModel;
+        Task PopAsync();
     }
 }
 

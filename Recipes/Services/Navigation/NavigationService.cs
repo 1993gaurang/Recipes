@@ -33,6 +33,14 @@ namespace Recipes.Services.Navigation
             }
         }
 
+        public async Task PopAsync()
+        {
+            if (Navigation != null)
+            {
+                await Navigation.PopAsync();
+            }
+        }
+
         private Page ResolvePageAndViewModel(Type viewModelType, object args)
         {
             Page page = null;
